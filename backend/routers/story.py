@@ -8,6 +8,7 @@ from db.database import get_db, SessionLocal
 from models.story import Story, StoryNode
 from models.job import StoryJob
 from schemas.job import StoryJobResponse
+from core.story_generator import StoryGenerator
 from schemas.story import (
     CompleteStoryResponse, CompleteStoryNodeResponse, CreateStoryRequest
 )
@@ -69,9 +70,9 @@ def generate_story_task(job_id: str, theme: str, session_id: str):
             job.status = "processing"
             db.commit()
             
-            story = {} # TODO: Gen Story
+            story = StoryGenerator.generate_story(theme)
             
-            job.story_id = 1 #TODO: update story
+            job.story_id = story.id
             job.status = "Complete"
             job.competed_at = datetime.now()
             db.commit()

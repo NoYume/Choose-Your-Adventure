@@ -1,7 +1,7 @@
-from sqlalchemy.orm import session
-from config import settings
+from sqlalchemy.orm import Session
+from core.config import settings
 
-from langchain_anthropic import anthropic
+from langchain_anthropic import ChatAnthropic
 from langchain_core.prompts import ChatPromptTemplate
 from langchain_core.output_parsers import PydanticOutputParser
 
