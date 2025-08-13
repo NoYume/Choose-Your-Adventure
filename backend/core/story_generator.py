@@ -57,31 +57,86 @@ class StoryGenerator:
     
     @classmethod
     def _process_story_node(cls, db: Session, story_id: int, node_data: StoryNodeLLM, is_root: bool = False) -> StoryNode:
+        if hasattr(node_data, "content"):
+            content = node_data.content
+        else:
+            content = node_data.get("content")
+        
+        if hasattr(node_data, "isEnding"):
+            is_ending = node_data.isEnding
+        else:
+            is_ending = node_data.get("isEnding", False)
+        
+        if hasattr(node_data, "isWinningEnding"):
+            is_winning_ending = node_data.isWinningEnding
+        else:
+            is_winning_ending = node_data.get("isWinningEnding", False)
+        
         node = StoryNode(
             story_id=story_id,
-            content=node_data.content if hasattr(node_data, "content") else node_data["content"],
+            content=content,
             is_root=is_root,
-            is_ending=node_data.isEnding if hasattr(node_data, "isEnding") else node_data["isEnding"],
-            is_winning_ending=node_data.isWinningEnding if hasattr(node_data, "isWinningEnding") else node_data["isWinningEnding"],
+            is_ending=is_ending,
+            is_winning_ending=is_winning_ending,
             options=[]
         )
         db.add(node)
         db.flush()
 
-        if not node.is_ending and (hasattr(node_data, "options") and node_data.options):
+        has_options = False
+        options_data = []
+        
+        if hasattr(node_data, "options") and node_data.options:
+            options_data = node_data.options
+            has_options = True
+        elif isinstance(node_data, dict) and node_data.get("options"):
+            options_data = node_data["options"]
+            has_options = True
+
+        if not node.is_ending and has_options:
             options_list = []
-            for option_data in node_data.options:
-                next_node = option_data.nextNode
+            
+            for option_data in options_data:
+                if not option_data:
+                    continue
+                    
+                option_text = None
+                if hasattr(option_data, "text"):
+                    option_text = option_data.text
+                elif isinstance(option_data, dict) and "text" in option_data:
+                    option_text = option_data["text"]
+                
+                next_node = None
+                if hasattr(option_data, "nextNode"):
+                    next_node = option_data.nextNode
+                elif isinstance(option_data, dict) and "nextNode" in option_data:
+                    next_node = option_data["nextNode"]
+                
+                if not option_text or not next_node:
+                    continue
 
                 if isinstance(next_node, dict):
-                    next_node = StoryNodeLLM.model_validate(next_node)
+                    if "isEnding" not in next_node:
+                        next_node["isEnding"] = False
+                    if "isWinningEnding" not in next_node:
+                        next_node["isWinningEnding"] = False
+                    if "content" not in next_node:
+                        continue
+                        
+                    try:
+                        next_node = StoryNodeLLM.model_validate(next_node)
+                    except Exception:
+                        continue
 
-                child_node = cls._process_story_node(db, story_id, next_node, False)
-
-                options_list.append({
-                    "text": option_data.text,
-                    "node_id": child_node.id
-                })
+                try:
+                    child_node = cls._process_story_node(db, story_id, next_node, False)
+                    
+                    options_list.append({
+                        "text": option_text,
+                        "node_id": child_node.id
+                    })
+                except Exception:
+                    continue
 
             node.options = options_list
 
