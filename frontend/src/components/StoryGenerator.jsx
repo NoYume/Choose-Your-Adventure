@@ -54,7 +54,7 @@ function StoryGenerator() {
             const { status, story_id, error: jobError } = response.data;
             setJobStatus(status);
 
-            if (status === "completed" && story_id) {
+            if ((status === "completed" || status === "Complete") && story_id) {
                 setLoading(false);
                 navigate(`/story/${story_id}`);
             } else if (status === "failed" || jobError) {
