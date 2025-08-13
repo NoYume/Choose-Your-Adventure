@@ -15,7 +15,7 @@ class StoryGenerator:
     
     @classmethod
     def _get_llm(cls):
-        return ChatAnthropic(model="claude-3-5-haiku-latest")
+        return ChatAnthropic(model="claude-3-haiku-20240307")
     
     @classmethod
     def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy")-> Story:
