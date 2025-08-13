@@ -284,14 +284,14 @@ button:hover {
 .option-btn {
   text-align: left;
   padding: 1rem;
-  background-color: #f0f7ff;
+  background-color: #444343;
   color: var(--text-color);
   border: 1px solid #d0e0f7;
   transition: all 0.3s;
 }
 
 .option-btn:hover {
-  background-color: #e0f0ff;
+  background-color: #3a3a3a;
   transform: translateY(-2px);
 }
 
