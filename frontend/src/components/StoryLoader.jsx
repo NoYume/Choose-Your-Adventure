@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import {useState, useEffect} from 'react';
 import {useParams, useNavigate} from "react-router-dom";
-import axios from "axios";
+import axios from 'axios';
 import LoadingStatus from "./LoadingStatus.jsx";
 import StoryGame from "./StoryGame.jsx";
+import {API_BASE_URL} from "../util.js";
 
-const API_BASE_URL = "/api"
 
 function StoryLoader() {
     const {id} = useParams();
@@ -14,30 +14,30 @@ function StoryLoader() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        loadStory(id)
+        loadStory(id);
     }, [id])
 
     const loadStory = async (storyId) => {
-        setLoading(true)
-        setError(null)
+        setLoading(true);
+        setError(null);
 
         try {
-            const response = await axios.get('${API_BASE_URL}/stories/${storyId}/complete')
-            setStory(response.data)
-            setLoading(false)
+            const response = await axios.get(`${API_BASE_URL}/stories/${storyId}/complete`);
+            setStory(response.data);
+            setLoading(false);
         } catch (err) {
             if (err.response?.status === 404) {
-                setError("Story is not found")
+                setError("Story is not found.");
             } else {
-                setError("Failed to load story")
-            } 
+                setError("Failed to load story");
+            }
         } finally {
-            setLoading(false)
+            setLoading(false);
         }
     }
 
     const createNewStory = () => {
-        navigate("/")
+        navigate("/");
     }
 
     if (loading) {
@@ -49,7 +49,7 @@ function StoryLoader() {
             <div className="error-message">
                 <h2>Story Not Found</h2>
                 <p>{error}</p>
-                <button onClick={createNewStory}>Got to Story Generator</button>
+                <button onClick={createNewStory}>Go to Story Generator</button>
             </div>
         </div>
     }
@@ -58,7 +58,7 @@ function StoryLoader() {
         return <div className="story-loader">
             <StoryGame story={story} onNewStory={createNewStory} />
         </div>
-    } 
+    }
 }
 
 export default StoryLoader;
