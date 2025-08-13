@@ -2,13 +2,13 @@
   --primary-color: #4a6fa5;
   --secondary-color: #166d89;
   --accent-color: #48cae4;
-  --text-color: #333;
-  --background-color: #f8f9fa;
-  --card-background: #ffffff;
+  --text-color: #f8f9fa;
+  --background-color: #333333;
+  --card-background: #444444;
   --success-color: #4caf50;
   --error-color: #f44336;
   --border-radius: 8px;
-  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
 }
 
 * {

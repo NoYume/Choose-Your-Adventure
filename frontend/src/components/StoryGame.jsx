@@ -53,7 +53,7 @@ function StoryGame({story, onNewStory}) {
                 {isEnding ?
                     <div className="story-ending">
                         <h3>{isWinningEnding ? "Congratulations" : "The End"}</h3>
-                        {isWinningEnding ? "You reached a winning ending" : "Your adventure has ended."}
+                        {isWinningEnding ? "You reached the winning ending" : "You reached the bad ending"}
                     </div>
                     :
                     <div className="story-options">
