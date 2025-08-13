@@ -9,3 +9,7 @@ endpoints:
     networkVisibilities:
       - Project
       - Public
+dependencies:
+  connectionReferences:
+    - name: Anthropic-Connection
+      resourceRef: thirdparty:Choose Your Adventure/v1
