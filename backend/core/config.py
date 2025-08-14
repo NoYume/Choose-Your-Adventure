@@ -17,11 +17,11 @@ class Settings(BaseSettings):
         self.DATABASE_URL = os.getenv("POSTGRES_URL") or self.DATABASE_URL
         
         if not self.DATABASE_URL:
-            db_user = os.getenv("DB_USER")
-            db_password = os.getenv("DB_PASSWORD") 
-            db_host = os.getenv("DB_HOST")
-            db_port = os.getenv("DB_PORT")
-            db_name = os.getenv("DB_NAME")
+            db_user = os.getenv("POSTGRES_USER")
+            db_password = os.getenv("POSTGRES_PASSWORD") 
+            db_host = os.getenv("POSTGRES_HOST")
+            db_port = "5432"
+            db_name = os.getenv("POSTGRES_DATABASE")
             if all([db_user, db_password, db_host, db_port, db_name]):
                 self.DATABASE_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
