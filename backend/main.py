@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from mangum import Mangum
 
 from core.config import settings
 from routers import story, job
@@ -46,8 +45,6 @@ async def favicon():
 
 app.include_router(story.router, prefix=settings.API_PREFIX)
 app.include_router(job.router, prefix=settings.API_PREFIX)
-
-handler = Mangum(app)
 
 if __name__ == "__main__":
     import uvicorn
