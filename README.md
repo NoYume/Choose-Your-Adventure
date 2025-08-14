@@ -1,117 +1,165 @@
 # Choose Your Adventure - AI Story Generator
 
-This project is a full-stack web application that allows users to generate and play through unique "Choose Your Own Adventure" style stories. A user provides a theme, and the backend leverages the Anthropic Claude LLM via Langchain to create a complete, branching narrative which is then served to the user through an interactive React frontend.
+This project is a full-stack web application that allows users to generate and play through unique "Choose Your Own Adventure" style stories. Users provide a theme, and the backend leverages the Anthropic Claude LLM via LangChain to create complete, branching narratives served through an interactive React frontend.
 
-## Features
+## 🚀 Live Demo
 
-- **Dynamic Story Generation**: Creates unique stories based on any user-provided theme.
-- **Asynchronous Job Processing**: Story generation is handled in the background, allowing the UI to remain responsive.
-- **Interactive Gameplay**: Users navigate the story by making choices that lead to different paths.
-- **Branching Narratives**: Stories include multiple paths, with at least one winning and several losing endings.
-- **Full-Stack Application**: Complete with a React frontend and a FastAPI backend.
-- **Vercel Deployment**: Seamlessly deployed on Vercel for both frontend and backend services.
+- **Frontend**: [https://choose-your-adventure-frontend.vercel.app/](https://choose-your-adventure-frontend.vercel.app/)
+- **Backend API**: [https://choose-your-adventure-backend.vercel.app/](https://choose-your-adventure-backend.vercel.app/)
+- **API Documentation**: [https://choose-your-adventure-backend.vercel.app/docs](https://choose-your-adventure-backend.vercel.app/docs)
 
-## Tech Stack
+## 📁 Project Structure
+
+```
+Choose-Your-Adventure/
+├── backend/                 # FastAPI backend
+│   ├── core/               # Core configuration and utilities
+│   ├── db/                 # Database models and connection
+│   ├── models/             # SQLAlchemy models
+│   ├── routers/            # API route handlers
+│   ├── main.py             # FastAPI application entry point
+│   ├── pyproject.toml      # uv/Python project configuration
+│   ├── requirements.txt    # Python dependencies
+│   └── vercel.json         # Vercel deployment config
+├── frontend/               # React frontend
+│   ├── public/             # Static assets
+│   ├── src/                # React source code
+│   │   ├── components/     # React components
+│   │   ├── pages/          # Page components
+│   │   └── utils/          # Utility functions
+│   ├── package.json        # Node.js dependencies
+│   ├── vite.config.js      # Vite configuration
+│   └── vercel.json         # Vercel deployment config
+└── README.md               
+```
+
+## ✨ Features
+
+- **🤖 Dynamic Story Generation**: Creates unique stories based on any user-provided theme
+- **⚡ Asynchronous Processing**: Story generation handled in background with job polling
+- **🎮 Interactive Gameplay**: Navigate stories by making choices that affect the narrative
+- **🌳 Branching Narratives**: Multiple paths with winning and losing endings
+- **📱 Responsive Design**: Works seamlessly on desktop and mobile devices
+- **🔄 Real-time Updates**: Live status updates during story generation
+- **☁️ Cloud Deployment**: Fully deployed on Vercel with PostgreSQL database
+
+## 🛠️ Tech Stack
 
 ### Backend
-
-- **Framework**: [FastAPI](https://fastapi.tiangolo.com/)
-- **LLM Integration**: [LangChain](https://python.langchain.com/)
-- **AI Model**: [Anthropic Claude 3 Haiku](https://www.anthropic.com/claude)
-- **Database ORM**: [SQLAlchemy](https://www.sqlalchemy.org/)
-- **Database**: SQLite (for development), PostgreSQL (for production)
-- **Data Validation**: [Pydantic](https://pydantic-docs.helpmanual.io/)
-- **Deployment**: [Vercel](https://vercel.com/)
+- **Framework**: [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
+- **Package Manager**: [uv](https://github.com/astral-sh/uv) - Fast Python package installer
+- **LLM Integration**: [LangChain](https://python.langchain.com/) - LLM orchestration framework
+- **AI Model**: [Anthropic Claude 3 Haiku](https://www.anthropic.com/claude) - Fast, intelligent AI model
+- **Database ORM**: [SQLAlchemy](https://www.sqlalchemy.org/) - Python SQL toolkit
+- **Database**: PostgreSQL (production), SQLite (development)
+- **Data Validation**: [Pydantic](https://pydantic-docs.helpmanual.io/) - Data validation using Python type hints
+- **ASGI Adapter**: [Uvicorn](https://www.uvicorn.org/) - Lightning-fast ASGI server
+- **Deployment**: [Vercel](https://vercel.com/) - Serverless functions
 
 ### Frontend
-
-- **Framework**: [React](https://react.dev/)
-- **Build Tool**: [Vite](https://vitejs.dev/)
-- **Routing**: [React Router](https://reactrouter.com/)
-- **HTTP Client**: [Axios](https://axios-http.com/)
+- **Framework**: [React 18](https://react.dev/) - Modern React with hooks
+- **Build Tool**: [Vite](https://vitejs.dev/) - Next generation frontend tooling
+- **Routing**: [React Router](https://reactrouter.com/) - Declarative routing for React
+- **HTTP Client**: [Axios](https://axios-http.com/) - Promise-based HTTP client
 - **Styling**: CSS with CSS Variables
-- **Deployment**: [Vercel](https://vercel.com/)
+- **Package Manager**: npm
+- **Deployment**: [Vercel](https://vercel.com/) - Static site hosting
 
-## Architecture
+## 🏗️ Architecture
 
-1.  The **React Frontend** prompts the user for a story theme.
-2.  On submission, it sends a request to the **FastAPI Backend** at the `POST /api/stories/create` endpoint.
-3.  The backend creates a `StoryJob` record in the database and starts a background task.
-4.  The background task uses **LangChain** to call the **Anthropic Claude LLM** with a detailed prompt, requesting a full branching story in a specific JSON format.
-5.  The LLM's response is parsed and saved to the database as a `Story` with multiple `StoryNode` entries.
-6.  The frontend polls the `GET /api/jobs/{job_id}` endpoint to check the status of the generation job.
-7.  Once the job is complete, the frontend navigates to the story page, fetching the full story data from `GET /api/stories/{story_id}/complete`.
-8.  The user can then play through the story, with each choice loading the next node's content.
+```
+graph TD
+    A[React Frontend] -->|POST /api/stories/create| B[FastAPI Backend]
+    B -->|Creates job| C[PostgreSQL Database]
+    B -->|Background task| D[Anthropic Claude API]
+    D -->|Generated story| B
+    A -->|Polls status| E[GET /api/jobs/{job_id}]
+    E -->|Job complete| A
+    A -->|Fetch story| F[GET /api/stories/{story_id}/complete]
+    F -->|Story data| A
+```
 
-## Local Development
+1. **React Frontend** prompts user for a story theme
+2. **FastAPI Backend** receives request at `POST /api/stories/create`
+3. Backend creates a `StoryJob` record and starts background task
+4. Background task calls **Anthropic Claude LLM** via **LangChain**
+5. LLM response parsed and saved as `Story` with multiple `StoryNode` entries
+6. Frontend polls `GET /api/jobs/{job_id}` for generation status
+7. On completion, frontend fetches full story from `GET /api/stories/{story_id}/complete`
+8. User navigates through story by making choices
+
+## 🚀 Quick Start
 
 ### Prerequisites
-
-- Python 3.13+
-- Node.js & npm
-- An [Anthropic API Key](https://console.anthropic.com/dashboard)
+- **Python 3.11+** with [uv](https://github.com/astral-sh/uv) installed
+- **Node.js 18+** and npm
+- **Anthropic API Key** ([Get one here](https://console.anthropic.com/dashboard))
 
 ### Backend Setup
 
-1.  Navigate to the backend directory:
-    ```sh
-    cd backend
-    ```
-2.  Create and activate a virtual environment:
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows: venv\Scripts\activate
-    ```
-3.  Install dependencies:
-    ```sh
-    pip install -r requirements.txt
-    ```
-4.  Create a `.env` file and add your Anthropic API key:
-    ```
-    # backend/.env
-    ANTHROPIC_API_KEY="sk-ant-..."
-    DATABASE_URL="sqlite:///./database.db"
-    ```
-5.  Initialize the database:
-    ```sh
-    python init_db.py
-    ```
-6.  Run the development server:
-    ```sh
-    uvicorn main:app --host 0.0.0.0 --port 8000 --reload
+1. **Navigate to backend directory:**
+   ```bash
+   cd backend
+   ```
+
+2. **Install dependencies with uv:**
+   ```bash
+   uv sync
+   ```
+
+3. **Activate virtual environment:**
+   ```bash
+   uv venv
+   ```
+
+4. **Create environment file:**
+   ```bash
+   # backend/.env
+   ANTHROPIC_API_KEY="sk-ant-your-api-key-here"
+   API_PREFIX=/api
+   DATABASE_URL="sqlite:///./database.db"
+   ALLOWED_ORIGINS="http://localhost:5173"
+   DEBUG=true
+   ```
+
+4. **Start backend service:**
+    ```bash
+    uv run main.py
     ```
 
 ### Frontend Setup
 
-1.  Navigate to the frontend directory:
-    ```sh
-    cd frontend
-    ```
-2.  Install dependencies:
-    ```sh
-    npm install
-    ```
-3.  Create a `.env.local` file to proxy requests to your local backend:
-    ```
-    # frontend/.env.local
-    VITE_API_URL=/api
-    VITE_DEBUG=true
-    ```
-    _Note: The `vite.config.js` is configured to use this variable to set up a proxy._
-4.  Run the development server:
-    ```sh
-    npm run dev
-    ```
-    The application will be available at `http://localhost:5173`.
+1. **Navigate to frontend directory:**
+   ```bash
+   cd frontend
+   ```
 
-## Deployment
+2. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+   
+3. **Start development server:**
+   ```bash
+   npm run dev
+   ```
 
-This project is configured for deployment on [Vercel](https://vercel.com/). Both the `frontend` and `backend` directories contain a `vercel.json` file that configures the build and deployment settings.
+## 📚 API Documentation
 
-- **Frontend**: Deployed as a Vite application.
-- **Backend**: Deployed as a Vercel Serverless Function using the Python runtime.
+Once the backend is running, visit:
+- **Local**: http://localhost:8000/docs
 
-The live application can be found at:
+### Key Endpoints
+- `POST /api/stories/create` - Create a new story generation job
+- `GET /api/jobs/{job_id}` - Check job status
+- `GET /api/stories/{story_id}/complete` - Retrieve complete story data
 
-- **Frontend**: [https://choose-your-adventure.vercel.app/](https://choose-your-adventure.vercel.app/)
-- **Backend API**: [https://choose-your-adventure-backend.vercel.app/](https://choose-your-adventure-backend.vercel.app/)
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch: `git checkout -b feature/amazing-feature`
+3. Commit your changes: `git commit -m 'Add amazing feature'`
+4. Push to the branch: `git push origin feature/amazing-feature`
+5. Open a Pull Request
+
+***
