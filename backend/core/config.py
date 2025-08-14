@@ -6,7 +6,7 @@ import os
 class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     DEBUG: bool = False
-    DATABASE_URL: str = None
+    DATABASE_URL: Optional[str] = None
     ALLOWED_ORIGINS: str = ""
     ANTHROPIC_API_KEY: str = None
     
