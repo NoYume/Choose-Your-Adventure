@@ -14,7 +14,12 @@ class Settings(BaseSettings):
     def __init__(self, **values):
         super().__init__(**values)
 
-        self.DATABASE_URL = os.getenv("POSTGRES_URL") or self.DATABASE_URL
+        raw_url = os.getenv("POSTGRES_URL") or os.getenv("DATABASE_URL")
+        
+        if raw_url:
+            self.DATABASE_URL = raw_url.replace("postgres://", "postgresql://", 1)
+        else:
+            self.DATABASE_URL = self._build_from_components()
         
         if not self.DATABASE_URL:
             db_user = os.getenv("POSTGRES_USER")
