@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
 import os
@@ -6,9 +6,9 @@ import os
 class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     DEBUG: bool = False
-    DATABASE_URL: str = None
+    DATABASE_URL: Optional[str] = None
     ALLOWED_ORIGINS: str = ""
-    ANTHROPIC_API_KEY: str = None
+    ANTHROPIC_API_KEY: Optional[str] = None
     
     
     def __init__(self, **values):
