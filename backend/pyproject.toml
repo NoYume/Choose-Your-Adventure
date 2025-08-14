@@ -9,6 +9,7 @@ dependencies = [
     "langchain>=0.3.27",
     "langchain-anthropic>=0.3.18",
     "psycopg2-binary>=2.9.10",
+    "pydantic-settings>=2.10.1",
     "python-dotenv>=1.1.1",
     "sqlalchemy>=2.0.42",
     "unicorn>=2.1.3",
