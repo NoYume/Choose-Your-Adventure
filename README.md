@@ -2,10 +2,6 @@
 
 This project is a full-stack web application that allows users to generate and play through unique "Choose Your Own Adventure" style stories. Users provide a theme, and the backend leverages the Anthropic Claude LLM via LangChain to create complete, branching narratives served through an interactive React frontend.
 
-## 🚀 Live Demo
-
-- **Frontend**: [https://choose-your-adventure-frontend.vercel.app/](https://choose-your-adventure-frontend.vercel.app/)
-
 ## 📁 Project Structure
 
 ```
