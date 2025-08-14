@@ -18,8 +18,6 @@ class Settings(BaseSettings):
         
         if raw_url:
             self.DATABASE_URL = raw_url.replace("postgres://", "postgresql://", 1)
-        else:
-            self.DATABASE_URL = self._build_from_components()
         
         if not self.DATABASE_URL:
             db_user = os.getenv("POSTGRES_USER")
