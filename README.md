@@ -2,6 +2,10 @@
 
 This project is a full-stack web application that allows users to generate and play through unique "Choose Your Own Adventure" style stories. Users provide a theme, and the backend leverages the Anthropic Claude LLM via LangChain to create complete, branching narratives served through an interactive React frontend.
 
+<p align="center">
+  <img src="https://github.com/NoYume/Choose-Your-Adventure/blob/aa1092e624e699ac217ac981dc70e1b4c812314e/media/demo.gif" />
+</p>
+
 ## 📁 Project Structure
 
 ```
@@ -24,6 +28,7 @@ Choose-Your-Adventure/
 │   ├── package.json        # Node.js dependencies
 │   ├── vite.config.js      # Vite configuration
 │   └── vercel.json         # Vercel deployment config
+├── media/                  # README media
 └── README.md               
 ```
 
