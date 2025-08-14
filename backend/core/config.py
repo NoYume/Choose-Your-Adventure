@@ -1,38 +1,34 @@
-from typing import List, Optional
+from typing import List
 from pydantic_settings import BaseSettings
 from pydantic import field_validator
 import os
 
-
 class Settings(BaseSettings):
     API_PREFIX: str = "/api"
     DEBUG: bool = False
-    DATABASE_URL: Optional[str] = None
+    DATABASE_URL: str = None
     ALLOWED_ORIGINS: str = ""
-    ANTHROPIC_API_KEY: Optional[str] = None
+    ANTHROPIC_API_KEY: str = None
     
     
     def __init__(self, **values):
         super().__init__(**values)
-        
+
         raw_url = os.getenv("POSTGRES_URL") or os.getenv("DATABASE_URL")
         
         if raw_url:
             self.DATABASE_URL = raw_url.replace("postgres://", "postgresql://", 1)
         else:
             self.DATABASE_URL = self._build_from_components()
-            
-            
-    def _build_from_components(self) -> Optional[str]:
-        db_user = os.getenv("POSTGRES_USER")
-        db_password = os.getenv("POSTGRES_PASSWORD") 
-        db_host = os.getenv("POSTGRES_HOST")
-        db_name = os.getenv("POSTGRES_DATABASE")
-        db_port = "5432"
         
-        if all([db_user, db_password, db_host, db_name]):
-            return f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
-        return None
+        if not self.DATABASE_URL:
+            db_user = os.getenv("POSTGRES_USER")
+            db_password = os.getenv("POSTGRES_PASSWORD") 
+            db_host = os.getenv("POSTGRES_HOST")
+            db_port = "5432"
+            db_name = os.getenv("POSTGRES_DATABASE")
+            if all([db_user, db_password, db_host, db_port, db_name]):
+                self.DATABASE_URL = f"postgresql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
 
 
     @field_validator("ALLOWED_ORIGINS")
