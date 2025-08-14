@@ -10,10 +10,6 @@
       "dest": "/main.py"
     },
     {
-      "src": "/redoc", 
-      "dest": "/main.py"
-    },
-    {
       "src": "/(.*)",
       "dest": "/main.py"
     }
