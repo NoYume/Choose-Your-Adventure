@@ -47,7 +47,6 @@ async def favicon():
 app.include_router(story.router, prefix=settings.API_PREFIX)
 app.include_router(job.router, prefix=settings.API_PREFIX)
 
-from mangum import Mangum
 handler = Mangum(app)
 
 if __name__ == "__main__":
