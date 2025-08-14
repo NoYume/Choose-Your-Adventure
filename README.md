@@ -5,8 +5,6 @@ This project is a full-stack web application that allows users to generate and p
 ## 🚀 Live Demo
 
 - **Frontend**: [https://choose-your-adventure-frontend.vercel.app/](https://choose-your-adventure-frontend.vercel.app/)
-- **Backend API**: [https://choose-your-adventure-backend.vercel.app/](https://choose-your-adventure-backend.vercel.app/)
-- **API Documentation**: [https://choose-your-adventure-backend.vercel.app/docs](https://choose-your-adventure-backend.vercel.app/docs)
 
 ## 📁 Project Structure
 
