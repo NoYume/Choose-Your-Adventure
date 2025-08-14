@@ -8,6 +8,7 @@ class Settings(BaseSettings):
     DEBUG: bool = False
     DATABASE_URL: str = None
     ALLOWED_ORIGINS: str = ""
+    ANTHROPIC_API_KEY: str = None
     
     
     def __init__(self, **values):
