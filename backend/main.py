@@ -27,6 +27,22 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
+@app.get("/")
+def read_root():
+    return {
+        "message": "Choose Your Own Adventure API", 
+        "version": "0.1.0",
+        "docs": "/docs"
+    }
+
+
+@app.get("/favicon.ico", include_in_schema=False)
+@app.get("/favicon.png", include_in_schema=False)
+async def favicon():
+    return {"message": "No favicon configured"}
+
+
 app.include_router(story.router, prefix=settings.API_PREFIX)
 app.include_router(job.router, prefix=settings.API_PREFIX)
 
