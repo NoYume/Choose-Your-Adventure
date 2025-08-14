@@ -16,13 +16,15 @@ class StoryGenerator:
     
     @classmethod
     def _get_llm(cls):
-        anthropic_api_key = os.getenv("CHOREO_ANTHROPIC_CONNECTION_ANTHROPIC_API_KEY")
-        serviceurl = os.getenv("CHOREO_ANTHROPIC_CONNECTION_SERVICEURL")
+        anthropic_api_key = os.getenv("ANTHROPIC_API_KEY")
+        if not anthropic_api_key:
+            raise ValueError("ANTHROPIC_API_KEY environment variable not set")
         
-        if anthropic_api_key and serviceurl:
-            return ChatAnthropic(model="claude-3-haiku-20240307", api_key=anthropic_api_key, base_url=serviceurl)
-        
-        return ChatAnthropic(model="claude-3-haiku-20240307")
+        return ChatAnthropic(
+            model="claude-3-haiku-20240307",
+            api_key=anthropic_api_key
+        )
+    
     
     @classmethod
     def generate_story(cls, db: Session, session_id: str, theme: str = "fantasy")-> Story:
