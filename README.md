@@ -34,13 +34,13 @@ Choose-Your-Adventure/
 
 ## ✨ Features
 
-- **🤖 Dynamic Story Generation**: Creates unique stories based on any user-provided theme
-- **⚡ Asynchronous Processing**: Story generation handled in background with job polling
-- **🎮 Interactive Gameplay**: Navigate stories by making choices that affect the narrative
-- **🌳 Branching Narratives**: Multiple paths with winning and losing endings
-- **📱 Responsive Design**: Works seamlessly on desktop and mobile devices
-- **🔄 Real-time Updates**: Live status updates during story generation
-- **☁️ Cloud Deployment**: Fully deployed on Vercel with PostgreSQL database
+- ** Dynamic Story Generation**: Creates unique stories based on any user-provided theme
+- ** Asynchronous Processing**: Story generation handled in background with job polling
+- ** Interactive Gameplay**: Navigate stories by making choices that affect the narrative
+- ** Branching Narratives**: Multiple paths with winning and losing endings
+- ** Responsive Design**: Works seamlessly on desktop and mobile devices
+- ** Real-time Updates**: Live status updates during story generation
+- ** Cloud Deployment**: Fully deployed on Vercel with PostgreSQL database
 
 ## 🛠️ Tech Stack
 
