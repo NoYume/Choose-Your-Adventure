@@ -6,7 +6,7 @@ This project is a full-stack web application that allows users to generate and p
   <img src="https://github.com/NoYume/Choose-Your-Adventure/blob/aa1092e624e699ac217ac981dc70e1b4c812314e/media/demo.gif" />
 </p>
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 Choose-Your-Adventure/
@@ -32,17 +32,7 @@ Choose-Your-Adventure/
 └── README.md               
 ```
 
-## ✨ Features
-
-- ** Dynamic Story Generation**: Creates unique stories based on any user-provided theme
-- ** Asynchronous Processing**: Story generation handled in background with job polling
-- ** Interactive Gameplay**: Navigate stories by making choices that affect the narrative
-- ** Branching Narratives**: Multiple paths with winning and losing endings
-- ** Responsive Design**: Works seamlessly on desktop and mobile devices
-- ** Real-time Updates**: Live status updates during story generation
-- ** Cloud Deployment**: Fully deployed on Vercel with PostgreSQL database
-
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Backend
 - **Framework**: [FastAPI](https://fastapi.tiangolo.com/) - Modern Python web framework
@@ -64,7 +54,7 @@ Choose-Your-Adventure/
 - **Package Manager**: npm
 - **Deployment**: [Vercel](https://vercel.com/) - Static site hosting
 
-## 🏗️ Architecture
+## Architecture
 
 ```
 graph TD
@@ -87,7 +77,7 @@ graph TD
 7. On completion, frontend fetches full story from `GET /api/stories/{story_id}/complete`
 8. User navigates through story by making choices
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - **Python 3.11+** with [uv](https://github.com/astral-sh/uv) installed
@@ -142,23 +132,3 @@ graph TD
    ```bash
    npm run dev
    ```
-
-## 📚 API Documentation
-
-Once the backend is running, visit:
-- **Local**: http://localhost:8000/docs
-
-### Key Endpoints
-- `POST /api/stories/create` - Create a new story generation job
-- `GET /api/jobs/{job_id}` - Check job status
-- `GET /api/stories/{story_id}/complete` - Retrieve complete story data
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/amazing-feature`
-3. Commit your changes: `git commit -m 'Add amazing feature'`
-4. Push to the branch: `git push origin feature/amazing-feature`
-5. Open a Pull Request
-
-***
